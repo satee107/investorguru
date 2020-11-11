@@ -1,0 +1,20 @@
+.bgimg{
+	background-image: url("../images/bginv.jpg");
+	border-radius:0px;
+}
+
+.cardstyle{
+	background-color: #061A32;
+	color:#ffffff;
+	box-shadow: 2px 2px #ccc;
+}
+.ariclecontent{
+	margin:30px 50px;
+}
+
+footer{
+	background:#6C757D ;
+	color:#fff;
+	font-size:14px;
+	padding:10px;
+}
