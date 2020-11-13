@@ -1,0 +1,46 @@
+investorguru
+
+customer
+investor
+adminpanel
+
+Home
+About
+Contact
+(name,email,message)
+
+customer
+	Register
+	Login
+
+	MyAccount(Update Profile, Change Password, Logout)
+	Ideas(Post Idea, View Idea, Edit and Delete)
+	Investors (Who are Interested)
+	Feedback
+investor
+	Register
+	Login
+	MyAccount(Update Profile, Chnage Password,Logout)
+	View Ideas(Like,UnLike,View)
+	IntrerestedIdeas
+	Feedback
+
+AdminPanel
+	Login
+	Changepassword
+	Logout
+	ViewIdeas-with delete
+	View Customers - Disable
+	View Investors - Disable
+
+customer(id,fullname,mobile,email,password,status)
+investor(id,fullname,mobile,email,password,status)
+ideas(id,title,descrption,fieldofwork,idatetime,likes,
+unlikes,custemail)
+feedback(id,name,email,message)
+likes(id,ideaid,investoremail)
+dislikes(id,ideaid,investoremail)
+
+	
+	
+
