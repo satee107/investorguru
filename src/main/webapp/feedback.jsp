@@ -1,4 +1,5 @@
 <!doctype html>
+<%@ page import="fit.*" %>
 <html>
 <head>
 <title>InvestorGuru - Index Page</title>
@@ -18,6 +19,7 @@
 <hr/>
 <div>
 <%
+
 
 String msg = (String)session.getAttribute("msg");
 String result = (String)session.getAttribute("result");
@@ -40,51 +42,34 @@ if(result!=null){
 		<%
 		
 	}
+	session.removeAttribute("result");
 }
 %>
 </div>
 <div class="row mb-3">
-	<div class="col-md-1"></div>
-	<div class="col-md-4">
-		<h2>Login Here</h2>
-		<form action="customerlogin.jsp" method="post">
+	<div class="col-md-3"></div>
+	<div class="col-md-6">
+		<h2>Update Profile</h2>
+		<form action="feedbackaction.jsp" method="post">
 			<div class="form-group">
 			<label for="email">Enter Email</label>
-			<input type="email" class="form-control" name="email" required/>
+			<input type="email" class="form-control" name="email" value="<%= email %>" required readonly/>
 			</div>
-			<div class="form-group">
-			<label for="password">Enter Password</label>
-			<input type="password" class="form-control" name="password" required/>
-			</div>
-			<input type="submit" value="Login" class="btn btn-primary"/>
-			<a href="">Forgot Password?</a>
-		</form>
-	</div>
-	<div class="col-md-1"></div>
-	<div class="col-md-4">
-	<h2>Register Here</h2>
-		<form action="customerreg.jsp" method="post">
 			<div class="form-group">
 			<label for="name">Enter Name</label>
-			<input type="text" class="form-control" name="name"/>
+			<input type="text" class="form-control" name="name" required/>
 			</div>
 			<div class="form-group">
-			<label for="mobile">Enter Mobile</label>
-			<input type="number" class="form-control" name="mobile"/>
+			<label for="message">Enter Message</label>
+			<input type="text" class="form-control" name="message" required/>
 			</div>
-			<div class="form-group">
-			<label for="email">Enter Email</label>
-			<input type="email" class="form-control" name="email"/>
-			</div>
-			<div class="form-group">
-			<label for="password">Enter Password</label>
-			<input type="password" class="form-control" name="password"/>
-			</div>
-			<input type="submit" value="Register" class="btn btn-primary"/>
+			<input type="submit" value="Send Feedback" class="btn btn-primary"/>
 			
 		</form>
 	</div>
-	<div class="col-md-1"></div>
+	<div class="col-md-3"></div>
+	
+	
 </div>
 
 </main>

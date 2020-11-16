@@ -44,47 +44,29 @@ if(result!=null){
 %>
 </div>
 <div class="row mb-3">
-	<div class="col-md-1"></div>
-	<div class="col-md-4">
-		<h2>Login Here</h2>
-		<form action="customerlogin.jsp" method="post">
+	<div class="col-md-3"></div>
+	<div class="col-md-6">
+		<h2>Change Password</h2>
+		<form action="custpwdaction.jsp" method="post">
 			<div class="form-group">
 			<label for="email">Enter Email</label>
-			<input type="email" class="form-control" name="email" required/>
+			<input type="email" class="form-control" name="email" value="<%= email %>" required readonly/>
 			</div>
 			<div class="form-group">
-			<label for="password">Enter Password</label>
-			<input type="password" class="form-control" name="password" required/>
-			</div>
-			<input type="submit" value="Login" class="btn btn-primary"/>
-			<a href="">Forgot Password?</a>
-		</form>
-	</div>
-	<div class="col-md-1"></div>
-	<div class="col-md-4">
-	<h2>Register Here</h2>
-		<form action="customerreg.jsp" method="post">
-			<div class="form-group">
-			<label for="name">Enter Name</label>
-			<input type="text" class="form-control" name="name"/>
+			<label for="opassword">Enter Old Password</label>
+			<input type="password" class="form-control" name="opassword" required/>
 			</div>
 			<div class="form-group">
-			<label for="mobile">Enter Mobile</label>
-			<input type="number" class="form-control" name="mobile"/>
+			<label for="npassword">Enter New Password</label>
+			<input type="password" class="form-control" name="npassword" required/>
 			</div>
-			<div class="form-group">
-			<label for="email">Enter Email</label>
-			<input type="email" class="form-control" name="email"/>
-			</div>
-			<div class="form-group">
-			<label for="password">Enter Password</label>
-			<input type="password" class="form-control" name="password"/>
-			</div>
-			<input type="submit" value="Register" class="btn btn-primary"/>
+			<input type="submit" value="Change Password" class="btn btn-primary"/>
 			
 		</form>
 	</div>
-	<div class="col-md-1"></div>
+	<div class="col-md-3"></div>
+	
+	
 </div>
 
 </main>

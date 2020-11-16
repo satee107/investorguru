@@ -39,16 +39,26 @@
     <li class="nav-item active">
       <a class="nav-link" href="customerhome.jsp">Home</a>
     </li>
+   <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+       Ideas
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">Post Idea</a>
+        <a class="dropdown-item" href="#">Manage Ideas</a>
+        <a class="dropdown-item" href="logout.jsp">Investors</a>
+      </div>
+    </li>
     <li class="nav-item">
-      <a class="nav-link" href="about.jsp">Post Idea</a>
+      <a class="nav-link" href="feedback.jsp">Feedback</a>
     </li>
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-        Profile(<%= email %>)
+        My Account(<%= email %>)
       </a>
       <div class="dropdown-menu">
-        <a class="dropdown-item" href="#">Change Password</a>
-        <a class="dropdown-item" href="#">Update Profile</a>
+        <a class="dropdown-item" href="customerchangepwd.jsp">Change Password</a>
+        <a class="dropdown-item" href="updateprofile.jsp">Update Profile</a>
         <a class="dropdown-item" href="logout.jsp">Logout</a>
       </div>
     </li>

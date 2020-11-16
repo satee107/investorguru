@@ -11,6 +11,7 @@ if(b){
 	session.setAttribute("login", "success");
 	session.setAttribute("type", "customer");
 	session.setAttribute("email", customer.getEmail());
+	
 	%>
 	<jsp:forward page="customerhome.jsp"/>
 	<%

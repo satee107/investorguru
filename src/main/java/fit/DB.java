@@ -58,7 +58,7 @@ public class DB {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from customers where "
 					+ "email='"+customer.getEmail()+"' and "
-							+ "password='"+customer.getPassword()+"'");
+							+ "password='"+customer.getPassword()+"' and status=1");
 			if(rs.next()) {
 				return true;
 			}
@@ -66,6 +66,88 @@ public class DB {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		return false;
+	}
+	
+	public boolean changepwd(String email,String oldpwd,String newpwd) {
+		try {
+			Connection con = getDbConnection();
+			PreparedStatement stmt = con.prepareStatement("update customers set password=? where email=? and password=?");
+			stmt.setString(1, newpwd);
+			stmt.setString(2, email);
+			stmt.setString(3,oldpwd);
+			int n = stmt.executeUpdate();
+			if(n>0) {
+				return true;
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	
+	public Customer getCustomet(String email) {
+		Customer customer = new Customer();
+		try {
+			
+			Connection con = getDbConnection();
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from customers where "
+					+ "email='"+email+"'");
+			if(rs.next()) {
+				customer.setEmail(rs.getString("email"));
+				customer.setMobile(rs.getLong("mobile"));
+				customer.setName(rs.getString("name"));
+				
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return customer;
+	}
+	
+	
+	public boolean updatecustprofile(String email,String name,long mobile) {
+		try {
+			Connection con = getDbConnection();
+			PreparedStatement stmt = con.prepareStatement("update customers set name=?,mobile=? where email=? ");
+			stmt.setString(1, name);
+			stmt.setLong(2, mobile);
+			stmt.setString(3,email);
+			int n = stmt.executeUpdate();
+			if(n>0) {
+				return true;
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	
+	public boolean addFeedback(String email,String name,String message)  {
+		int n=0;
+		try {
+		Connection con = getDbConnection();
+		PreparedStatement ps = con.prepareStatement("insert into feedback(name,email,message) values(?,?,?)");
+		ps.setString(1, name);
+		ps.setString(2, email);
+		ps.setString(3, message);
+		System.out.println("in db method");
+		n = ps.executeUpdate();
+		System.out.println(n+" =======");
+		if(n>0) {
+			return true;
+		}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 		return false;
 	}
 }
