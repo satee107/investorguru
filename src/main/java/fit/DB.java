@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DB {
 	Connection con=null;
@@ -150,4 +152,83 @@ public class DB {
 		
 		return false;
 	}
+	
+	public boolean addidea(Idea idea)  {
+		int n=0;
+		try {
+		Connection con = getDbConnection();
+		PreparedStatement ps = con.prepareStatement("insert into ideas(title,description,domain,custemail) values(?,?,?,?)");
+		ps.setString(1, idea.getTitle());
+		ps.setString(2, idea.getDescription());
+		ps.setString(3, idea.getDomain());
+		ps.setString(4, idea.getCustemail());
+
+		System.out.println("in db method");
+		n = ps.executeUpdate();
+		System.out.println(n+" =======");
+		if(n>0) {
+			return true;
+		}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	
+	public List<Idea> viewideas(String email) {
+		List<Idea> list = new ArrayList<Idea>();
+		try {
+			
+			Connection con = getDbConnection();
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from ideas where "
+					+ "custemail='"+email+"'");
+			while(rs.next()) {
+				Idea idea = new Idea();
+				idea.setId(rs.getInt("id"));
+				idea.setTitle(rs.getString("title"));
+				idea.setDescription(rs.getString("description"));
+				idea.setDomain(rs.getString("domain"));
+				idea.setLikes(rs.getInt("likes"));
+				idea.setDislikes(rs.getInt("dislikes"));
+				idea.setCustemail(rs.getString("custemail"));
+				idea.setPdate(rs.getString("pdate"));
+				list.add(idea);
+				
+				
+				
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public boolean deleteidea(int id)  {
+		int n=0;
+		try {
+		Connection con = getDbConnection();
+		PreparedStatement ps = con.prepareStatement("delete from ideas where id=?");
+		ps.setInt(1, id);
+	
+
+		System.out.println("in db method");
+		n = ps.executeUpdate();
+		System.out.println(n+" =======");
+		if(n>0) {
+			return true;
+		}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	
 }

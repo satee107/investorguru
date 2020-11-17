@@ -44,8 +44,7 @@
        Ideas
       </a>
       <div class="dropdown-menu">
-        <a class="dropdown-item" href="#">Post Idea</a>
-        <a class="dropdown-item" href="#">Manage Ideas</a>
+        <a class="dropdown-item" href="ideaadd.jsp">Idea Management</a>
         <a class="dropdown-item" href="logout.jsp">Investors</a>
       </div>
     </li>
