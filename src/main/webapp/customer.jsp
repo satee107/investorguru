@@ -40,9 +40,11 @@ if(result!=null){
 		<%
 		
 	}
+	session.removeAttribute("result");
 }
 %>
 </div>
+<h1>Customer</h1>
 <div class="row mb-3">
 	<div class="col-md-1"></div>
 	<div class="col-md-4">

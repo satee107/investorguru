@@ -131,6 +131,8 @@ public class DB {
 	}
 	
 	
+	
+	
 	public boolean addFeedback(String email,String name,String message)  {
 		int n=0;
 		try {
@@ -208,6 +210,68 @@ public class DB {
 		return list;
 	}
 	
+	
+	public List<Idea> viewideasforinvestor() {
+		List<Idea> list = new ArrayList<Idea>();
+		try {
+			
+			Connection con = getDbConnection();
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from ideas order by pdate desc");
+			while(rs.next()) {
+				Idea idea = new Idea();
+				idea.setId(rs.getInt("id"));
+				idea.setTitle(rs.getString("title"));
+				idea.setDescription(rs.getString("description"));
+				idea.setDomain(rs.getString("domain"));
+				idea.setLikes(rs.getInt("likes"));
+				idea.setDislikes(rs.getInt("dislikes"));
+				idea.setCustemail(rs.getString("custemail"));
+				idea.setPdate(rs.getString("pdate"));
+				list.add(idea);
+				
+				
+				
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	
+	public List<Idea> viewideasforinvestorliked() {
+		List<Idea> list = new ArrayList<Idea>();
+		try {
+			
+			Connection con = getDbConnection();
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from ideas order by pdate desc");
+			while(rs.next()) {
+				Idea idea = new Idea();
+				idea.setId(rs.getInt("id"));
+				idea.setTitle(rs.getString("title"));
+				idea.setDescription(rs.getString("description"));
+				idea.setDomain(rs.getString("domain"));
+				idea.setLikes(rs.getInt("likes"));
+				idea.setDislikes(rs.getInt("dislikes"));
+				idea.setCustemail(rs.getString("custemail"));
+				idea.setPdate(rs.getString("pdate"));
+				list.add(idea);
+				
+				
+				
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	
+	
 	public boolean deleteidea(int id)  {
 		int n=0;
 		try {
@@ -227,6 +291,216 @@ public class DB {
 			e.printStackTrace();
 		}
 		
+		return false;
+	}
+	
+	
+	public boolean updateidea(Idea idea) {
+		try {
+			Connection con = getDbConnection();
+			PreparedStatement stmt = con.prepareStatement("update ideas set title=?,description=?,domain=? where id=? ");
+			stmt.setString(1, idea.getTitle());
+			stmt.setString(2, idea.getDescription());
+			stmt.setString(3,idea.getDomain());
+			stmt.setInt(4, idea.getId());
+			int n = stmt.executeUpdate();
+			if(n>0) {
+				return true;
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	
+	
+	public int addInvestor(Investor investor)  {
+		int n=0;
+		try {
+		Connection con = getDbConnection();
+		PreparedStatement ps = con.prepareStatement("insert into "
+				+ "investors(name,mobile,email,password) values(?,?,?,?)");
+		ps.setString(1, investor.getName());
+		ps.setLong(2, investor.getMobile());
+		ps.setString(3, investor.getEmail());
+		ps.setString(4, investor.getPassword());
+		
+		n = ps.executeUpdate();
+		ps.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return n;
+	}
+	
+	public boolean loginInvestor(Investor investor) {
+		try {
+			Connection con = getDbConnection();
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from investors where "
+					+ "email='"+investor.getEmail()+"' and "
+							+ "password='"+investor.getPassword()+"' and status=1");
+			if(rs.next()) {
+				return true;
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean changepwdinvestor(String email,String oldpwd,String newpwd) {
+		try {
+			Connection con = getDbConnection();
+			PreparedStatement stmt = con.prepareStatement("update investors set password=? where email=? and password=?");
+			stmt.setString(1, newpwd);
+			stmt.setString(2, email);
+			stmt.setString(3,oldpwd);
+			int n = stmt.executeUpdate();
+			if(n>0) {
+				return true;
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	
+	public Investor getInvestor(String email) {
+		Investor investor = new Investor();
+		try {
+			
+			Connection con = getDbConnection();
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from investors where "
+					+ "email='"+email+"'");
+			if(rs.next()) {
+				investor.setEmail(rs.getString("email"));
+				investor.setMobile(rs.getLong("mobile"));
+				investor.setName(rs.getString("name"));
+				
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return investor;
+	}
+	
+	
+	public boolean updateinvestorprofile(String email,String name,long mobile) {
+		try {
+			Connection con = getDbConnection();
+			PreparedStatement stmt = con.prepareStatement("update investors set name=?,mobile=? where email=? ");
+			stmt.setString(1, name);
+			stmt.setLong(2, mobile);
+			stmt.setString(3,email);
+			int n = stmt.executeUpdate();
+			if(n>0) {
+				return true;
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean idealike(int id,String email) {
+		try {
+			Connection con = getDbConnection();
+			
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from likes where "
+					+ "email='"+email+"' and "
+							+ "ideaid='"+id+"'");
+			if(rs.next()) {
+				return false;
+			}
+			else {
+			
+			PreparedStatement stmt1 = con.prepareStatement("insert into likes(ideaid,email) values(?,?)");
+			stmt1.setInt(1, id);
+			stmt1.setString(2, email);
+			int n = stmt1.executeUpdate();
+			System.out.println(n+" n++++++++++");
+			if(n>0) {
+				
+				PreparedStatement stmt2 = con.prepareStatement("update ideas set likes=likes+1 where id=?");
+				stmt2.setInt(1, id);
+				stmt2.executeUpdate();
+				
+				PreparedStatement stmt3 = con.prepareStatement("delete from dislikes where ideaid=? and email=?");
+				stmt3.setInt(1, id);
+				stmt3.setString(2, email);
+				int m = stmt2.executeUpdate();
+				System.out.println(m+" m++++++++++");
+
+				if(m>0) {
+					PreparedStatement stmt4 = con.prepareStatement("update ideas set dislikes=dislikes-1 where id=?");
+					stmt4.setInt(1, id);
+					stmt4.executeUpdate();
+				}
+				
+				
+				return true;
+			}
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean ideadislike(int id,String email) {
+		try {
+			Connection con = getDbConnection();
+			
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from dislikes where "
+					+ "email='"+email+"' and "
+							+ "ideaid='"+id+"'");
+			if(rs.next()) {
+				return false;
+			}
+			else {
+			
+			PreparedStatement stmt1 = con.prepareStatement("insert into dislikes(ideaid,email) values(?,?)");
+			stmt1.setInt(1, id);
+			stmt1.setString(2, email);
+			int n = stmt1.executeUpdate();
+			if(n>0) {
+				
+				PreparedStatement stmt2 = con.prepareStatement("update ideas set dislikes=dislikes+1 where id=?");
+				stmt2.setInt(1, id);
+				stmt2.executeUpdate();
+				
+				PreparedStatement stmt3 = con.prepareStatement("delete from likes where ideaid=? and email=?");
+				stmt3.setInt(1, id);
+				stmt3.setString(2, email);
+				int m = stmt2.executeUpdate();
+				
+				if(m>0) {
+					PreparedStatement stmt4 = con.prepareStatement("update ideas set likes=likes-1 where id=?");
+					stmt4.setInt(1, id);
+					stmt4.executeUpdate();
+				}
+				
+				return true;
+			}
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		return false;
 	}
 	

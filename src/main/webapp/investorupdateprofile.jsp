@@ -19,7 +19,8 @@
 <hr/>
 <div>
 <%
-
+DB db = new DB();
+Investor investor = db.getInvestor(email);
 
 String msg = (String)session.getAttribute("msg");
 String result = (String)session.getAttribute("result");
@@ -49,21 +50,21 @@ if(result!=null){
 <div class="row mb-3">
 	<div class="col-md-3"></div>
 	<div class="col-md-6">
-		<h2>Submit Feedback</h2>
-		<form action="feedbackaction.jsp" method="post">
+		<h2>Update Profile</h2>
+		<form action="investorupdateprofileaction.jsp" method="post">
 			<div class="form-group">
 			<label for="email">Enter Email</label>
 			<input type="email" class="form-control" name="email" value="<%= email %>" required readonly/>
 			</div>
 			<div class="form-group">
 			<label for="name">Enter Name</label>
-			<input type="text" class="form-control" name="name" required/>
+			<input type="text" class="form-control" name="name" value="<%= investor.getName() %>"required/>
 			</div>
 			<div class="form-group">
-			<label for="message">Enter Message</label>
-			<input type="text" class="form-control" name="message" required/>
+			<label for="mobile">Enter Mobile</label>
+			<input type="number" class="form-control" name="mobile" value="<%= investor.getMobile() %>" required/>
 			</div>
-			<input type="submit" value="Send Feedback" class="btn btn-primary"/>
+			<input type="submit" value="Update Profile" class="btn btn-primary"/>
 			
 		</form>
 	</div>
