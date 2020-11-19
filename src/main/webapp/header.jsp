@@ -45,7 +45,7 @@
       </a>
       <div class="dropdown-menu">
         <a class="dropdown-item" href="ideaadd.jsp">Idea Management</a>
-        <a class="dropdown-item" href="logout.jsp">Investors</a>
+        <a class="dropdown-item" href="viewinvestors.jsp">Investors</a>
       </div>
     </li>
     <li class="nav-item">
@@ -89,6 +89,36 @@
       <div class="dropdown-menu">
         <a class="dropdown-item" href="investorchangepwd.jsp">Change Password</a>
         <a class="dropdown-item" href="investorupdateprofile.jsp">Update Profile</a>
+        <a class="dropdown-item" href="logout.jsp">Logout</a>
+      </div>
+    </li>
+  </ul>
+  <%
+	}
+  else if(type.equals("admin")){
+  %>
+   <ul class="navbar-nav ml-auto">
+    <li class="nav-item active">
+      <a class="nav-link" href="adminhome.jsp">Home</a>
+    </li>
+   <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+       Views
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="adminviewideas.jsp">View All Ideas</a>
+        <a class="dropdown-item" href="adminviewcustomers.jsp">View All Customers </a>
+        <a class="dropdown-item" href="adminviewinvestors.jsp">View All Investors</a>
+        <a class="dropdown-item" href="adminviewfeedback.jsp">View All Feedbacks </a>
+      </div>
+    </li>
+    
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        My Account(<%= email %>)
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="adminchangepwd.jsp">Change Password</a>
         <a class="dropdown-item" href="logout.jsp">Logout</a>
       </div>
     </li>

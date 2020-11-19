@@ -1,5 +1,4 @@
 <!doctype html>
-<%@ page import="fit.*,java.util.*" %>
 <html>
 <head>
 <title>InvestorGuru - Index Page</title>
@@ -19,7 +18,6 @@
 <hr/>
 <div>
 <%
-
 
 String msg = (String)session.getAttribute("msg");
 String result = (String)session.getAttribute("result");
@@ -44,70 +42,26 @@ if(result!=null){
 	}
 	session.removeAttribute("result");
 }
-
-
-String id = request.getParameter("id");
 %>
 </div>
+<h1>Admin</h1>
 <div class="row mb-3">
 	<div class="col-md-2"></div>
-	
-	<%
-	
-	DB db = new DB();
-	List<Idea> list = db.viewideasforinvestorliked(email);
-	%>
-	<div class="col-md-8">
-	<h2>View Liked Ideas (<%= list.size() %>)</h2>
-	<%
-	
-	if(list.size()==0){
-		
-		%>
-		<div class="card p-3">
-				<h3>No Data Found</h3>	
-		</div>
-		<%
-	}
-	else{
-		for(int i=0;i<list.size();i++){
-			Idea idea = list.get(i);
-			%>
-			
-			<div class="card p-3 m-1">
-				<h3><%= idea.getTitle() %></h3>
-  				<p>
-  					<%= idea.getDescription() %>
-  				</p>
-  				<div class="inline">
-  				<p><i class="fa fa-align-justify text-primary"></i> <%= idea.getDomain() %></p>
-  				<p><i class="fa fa-table"></i> <%= idea.getPdate() %></p>
-  				<p>
-  				<a href="idealikeaction.jsp?id=<%= idea.getId() %>" >
-  				<i class="fa fa-thumbs-up text-success"></i> <%= idea.getLikes() %>
-  				</a>
-  				</p>
-  				<p>
-  				<a href="ideadislikeaction.jsp?id=<%= idea.getId() %>" >
-  				<i class="fa fa-thumbs-down text-danger"></i> <%= idea.getDislikes() %>
-  				</a>
-  				</p>
-  				</div>
-  				
-  				
-		</div>
-	
-			
-			<%
-		}
-	}
-	%>
-	
-		
-	
+	<div class="col-md-6">
+		<h2>Login Here</h2>
+		<form action="adminlogin.jsp" method="post">
+			<div class="form-group">
+			<label for="email">Enter Email</label>
+			<input type="email" class="form-control" name="email" required/>
+			</div>
+			<div class="form-group">
+			<label for="password">Enter Password</label>
+			<input type="password" class="form-control" name="password" required/>
+			</div>
+			<input type="submit" value="Login" class="btn btn-primary"/>
+		</form>
 	</div>
 	<div class="col-md-2"></div>
-	
 	
 </div>
 

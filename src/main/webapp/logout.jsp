@@ -6,8 +6,11 @@ session.invalidate();
 
 if(type.equals("customer"))
 	response.sendRedirect("customer.jsp");
-else
+else if(type.equals("investor"))
 	response.sendRedirect("investor.jsp");
+else
+	response.sendRedirect("admin.jsp");
+
 
 
 %>

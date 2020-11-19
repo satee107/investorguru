@@ -53,12 +53,11 @@ String id = request.getParameter("id");
 	<div class="col-md-2"></div>
 	
 	<%
-	
 	DB db = new DB();
-	List<Idea> list = db.viewideasforinvestorliked(email);
+	List<Idea> list = db.viewIdeas();
 	%>
 	<div class="col-md-8">
-	<h2>View Liked Ideas (<%= list.size() %>)</h2>
+	<h2>View Ideas (<%= list.size() %>)</h2>
 	<%
 	
 	if(list.size()==0){
@@ -83,14 +82,12 @@ String id = request.getParameter("id");
   				<p><i class="fa fa-align-justify text-primary"></i> <%= idea.getDomain() %></p>
   				<p><i class="fa fa-table"></i> <%= idea.getPdate() %></p>
   				<p>
-  				<a href="idealikeaction.jsp?id=<%= idea.getId() %>" >
   				<i class="fa fa-thumbs-up text-success"></i> <%= idea.getLikes() %>
-  				</a>
+  				
   				</p>
   				<p>
-  				<a href="ideadislikeaction.jsp?id=<%= idea.getId() %>" >
   				<i class="fa fa-thumbs-down text-danger"></i> <%= idea.getDislikes() %>
-  				</a>
+  			
   				</p>
   				</div>
   				

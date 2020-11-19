@@ -55,10 +55,10 @@ String id = request.getParameter("id");
 	<%
 	
 	DB db = new DB();
-	List<Idea> list = db.viewideasforinvestorliked(email);
+	List<Feedback> list = db.viewFeedback();
 	%>
 	<div class="col-md-8">
-	<h2>View Liked Ideas (<%= list.size() %>)</h2>
+	<h2>View Feedbacks (<%= list.size() %>)</h2>
 	<%
 	
 	if(list.size()==0){
@@ -71,27 +71,17 @@ String id = request.getParameter("id");
 	}
 	else{
 		for(int i=0;i<list.size();i++){
-			Idea idea = list.get(i);
+			Feedback feedback = list.get(i);
 			%>
 			
 			<div class="card p-3 m-1">
-				<h3><%= idea.getTitle() %></h3>
-  				<p>
-  					<%= idea.getDescription() %>
-  				</p>
+				<h3><%= feedback.getName() %></h3>
+  				
   				<div class="inline">
-  				<p><i class="fa fa-align-justify text-primary"></i> <%= idea.getDomain() %></p>
-  				<p><i class="fa fa-table"></i> <%= idea.getPdate() %></p>
-  				<p>
-  				<a href="idealikeaction.jsp?id=<%= idea.getId() %>" >
-  				<i class="fa fa-thumbs-up text-success"></i> <%= idea.getLikes() %>
-  				</a>
-  				</p>
-  				<p>
-  				<a href="ideadislikeaction.jsp?id=<%= idea.getId() %>" >
-  				<i class="fa fa-thumbs-down text-danger"></i> <%= idea.getDislikes() %>
-  				</a>
-  				</p>
+  				<p><i class="fa fa-envelope text-primary"></i> <%= feedback.getEmail() %></p>
+  				<p><i class="fa fa-file text-success"></i> <%= feedback.getMessage() %></p>
+  				
+  				
   				</div>
   				
   				

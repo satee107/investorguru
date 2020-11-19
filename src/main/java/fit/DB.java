@@ -241,13 +241,13 @@ public class DB {
 	}
 	
 	
-	public List<Idea> viewideasforinvestorliked() {
+	public List<Idea> viewideasforinvestorliked(String email) {
 		List<Idea> list = new ArrayList<Idea>();
 		try {
 			
 			Connection con = getDbConnection();
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("select * from ideas order by pdate desc");
+			ResultSet rs = stmt.executeQuery("select i.id,i.title,i.description,i.domain,i.likes,i.dislikes,i.custemail,i.pdate from ideas i,likes l where i.id=l.ideaid and l.email='"+email+"' order by pdate desc");
 			while(rs.next()) {
 				Idea idea = new Idea();
 				idea.setId(rs.getInt("id"));
@@ -270,7 +270,31 @@ public class DB {
 		return list;
 	}
 	
-	
+	public List<Investor> viewinvestorliked(String email) {
+		List<Investor> list = new ArrayList<Investor>();
+		try {
+			
+			Connection con = getDbConnection();
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select DISTINCT inv.email,inv.name,inv.mobile from investors inv,ideas i,likes l where i.custemail='"+email+"' and inv.email=l.email and i.id=l.ideaid");
+			
+			while(rs.next()) {
+				Investor investor = new Investor();
+				investor.setEmail(rs.getString("email"));
+				investor.setName(rs.getString("name"));
+				investor.setMobile(rs.getLong("mobile"));
+				
+				list.add(investor);
+				
+				
+				
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return list;
+	}
 	
 	public boolean deleteidea(int id)  {
 		int n=0;
@@ -440,7 +464,7 @@ public class DB {
 				PreparedStatement stmt3 = con.prepareStatement("delete from dislikes where ideaid=? and email=?");
 				stmt3.setInt(1, id);
 				stmt3.setString(2, email);
-				int m = stmt2.executeUpdate();
+				int m = stmt3.executeUpdate();
 				System.out.println(m+" m++++++++++");
 
 				if(m>0) {
@@ -486,7 +510,7 @@ public class DB {
 				PreparedStatement stmt3 = con.prepareStatement("delete from likes where ideaid=? and email=?");
 				stmt3.setInt(1, id);
 				stmt3.setString(2, email);
-				int m = stmt2.executeUpdate();
+				int m = stmt3.executeUpdate();
 				
 				if(m>0) {
 					PreparedStatement stmt4 = con.prepareStatement("update ideas set likes=likes-1 where id=?");
@@ -505,4 +529,137 @@ public class DB {
 	}
 	
 	
+	public boolean adminlogin(String email,String password) {
+		try {
+			Connection con = getDbConnection();
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from admin where "
+					+ "email='"+email+"' and "
+							+ "password='"+password+"'");
+			if(rs.next()) {
+				return true;
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean adminchangepwd(String email,String oldpwd,String newpwd) {
+		try {
+			Connection con = getDbConnection();
+			PreparedStatement stmt = con.prepareStatement("update admin set password=? where email=? and password=?");
+			stmt.setString(1, newpwd);
+			stmt.setString(2, email);
+			stmt.setString(3,oldpwd);
+			int n = stmt.executeUpdate();
+			if(n>0) {
+				return true;
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	
+	public List<Investor> viewInvestors() {
+		List<Investor> list = new ArrayList<Investor>();
+
+		try {
+			
+			Connection con = getDbConnection();
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from investors order by name");
+			while(rs.next()) {
+				Investor investor = new Investor();
+				investor.setEmail(rs.getString("email"));
+				investor.setMobile(rs.getLong("mobile"));
+				investor.setName(rs.getString("name"));
+				list.add(investor)
+;				
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	
+	public List<Idea> viewIdeas() {
+		List<Idea> list = new ArrayList<Idea>();
+		try {
+			
+			Connection con = getDbConnection();
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from ideas order by pdate");
+			while(rs.next()) {
+				Idea idea = new Idea();
+				idea.setId(rs.getInt("id"));
+				idea.setTitle(rs.getString("title"));
+				idea.setDescription(rs.getString("description"));
+				idea.setDomain(rs.getString("domain"));
+				idea.setLikes(rs.getInt("likes"));
+				idea.setDislikes(rs.getInt("dislikes"));
+				idea.setCustemail(rs.getString("custemail"));
+				idea.setPdate(rs.getString("pdate"));
+				list.add(idea);
+				
+				
+				
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public List<Customer> viewCustomers() {
+		List<Customer> list = new ArrayList<Customer>();
+		try {
+			
+			Connection con = getDbConnection();
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from customers order by name");
+			while(rs.next()) {
+				Customer customer = new Customer();
+				customer.setEmail(rs.getString("email"));
+				customer.setMobile(rs.getLong("mobile"));
+				customer.setName(rs.getString("name"));
+				list.add(customer);
+				
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public List<Feedback> viewFeedback() {
+		List<Feedback> list = new ArrayList<Feedback>();
+		try {
+			
+			Connection con = getDbConnection();
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from feedback order by id");
+			while(rs.next()) {
+				Feedback feedback = new Feedback();
+				feedback.setEmail(rs.getString("email"));
+				feedback.setId(rs.getInt("id"));
+				feedback.setName(rs.getString("name"));
+				feedback.setMessage(rs.getString("message"));
+				list.add(feedback);
+				
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return list;
+	}
 }
