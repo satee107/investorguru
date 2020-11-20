@@ -1,7 +1,7 @@
 package fit;
 
 public class Investor {
-	private int id;
+	private int id,status;
 	private String name,email,password;
 	private long mobile;
 	public int getId() {
@@ -33,6 +33,12 @@ public class Investor {
 	}
 	public void setMobile(long mobile) {
 		this.mobile = mobile;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
 	}
 	
 	

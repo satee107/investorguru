@@ -1,5 +1,5 @@
 function check(){
-	if(confirm("Do you want to really delete it?")){
+	if(confirm("Do you want to really perform the opearation?")){
 		return true;
 	}
 	else{

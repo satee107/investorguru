@@ -2,9 +2,10 @@ package fit;
 
 public class Customer {
 	
-	private int id;
+	private int id,status;
 	private String name,email,password;
 	private long mobile;
+	
 	public int getId() {
 		return id;
 	}
@@ -36,6 +37,11 @@ public class Customer {
 		this.mobile = mobile;
 	}
 	
-	
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
 }

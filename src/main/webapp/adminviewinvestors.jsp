@@ -81,7 +81,21 @@ String id = request.getParameter("id");
   				<p><i class="fa fa-envelope text-primary"></i> <%= investor.getEmail() %></p>
   				<p><i class="fa fa-mobile text-success"></i> <%= investor.getMobile() %></p>
   				
+  				<%
+  				if(investor.getStatus()==1){
+  					%>
+  					<a href="updateinvestorstatus.jsp?id=<%= investor.getId() %>&type=disable" class="btn btn-danger" onclick="return check();">
+  				 <i class="fa fa-trash"></i> Disable</a>
+  					<%
+  				}
+  				else{
+  					%>
+  					<a href="updateinvestorstatus.jsp?id=<%= investor.getId() %>&type=enable" class="btn btn-success" onclick="return check();">
+  				 <i class="fa fa-edit"></i> Enable</a>
+  					<%
+  				}
   				
+  				%>
   				</div>
   				
   				

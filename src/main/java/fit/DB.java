@@ -578,6 +578,8 @@ public class DB {
 				investor.setEmail(rs.getString("email"));
 				investor.setMobile(rs.getLong("mobile"));
 				investor.setName(rs.getString("name"));
+				investor.setId(rs.getInt("id"));
+				investor.setStatus(rs.getInt("status"));
 				list.add(investor)
 ;				
 			}
@@ -630,6 +632,8 @@ public class DB {
 				customer.setEmail(rs.getString("email"));
 				customer.setMobile(rs.getLong("mobile"));
 				customer.setName(rs.getString("name"));
+				customer.setStatus(rs.getInt("status"));
+				customer.setId(rs.getInt("id"));
 				list.add(customer);
 				
 			}
@@ -661,5 +665,77 @@ public class DB {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	
+	public boolean deletefeedback(int id)  {
+		int n=0;
+		try {
+		Connection con = getDbConnection();
+		PreparedStatement ps = con.prepareStatement("delete from feedback where id=?");
+		ps.setInt(1, id);
+	
+
+		n = ps.executeUpdate();
+		if(n>0) {
+			return true;
+		}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	
+	public boolean updatecustomerstatus(int id,String type)  {
+		int n=0;
+		PreparedStatement ps=null;
+		try {
+		Connection con = getDbConnection();
+		if(type.equals("enable"))
+			ps= con.prepareStatement("update customers set status=1 where id=?");
+		else
+			ps= con.prepareStatement("update customers set status=0 where id=?");
+
+		ps.setInt(1, id);
+	
+
+		n = ps.executeUpdate();
+		if(n>0) {
+			return true;
+		}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	public boolean updateinvestorstatus(int id,String type)  {
+		int n=0;
+		PreparedStatement ps=null;
+		try {
+		Connection con = getDbConnection();
+		if(type.equals("enable"))
+			ps= con.prepareStatement("update investors set status=1 where id=?");
+		else
+			ps= con.prepareStatement("update investors set status=0 where id=?");
+
+		ps.setInt(1, id);
+	
+
+		n = ps.executeUpdate();
+		if(n>0) {
+			return true;
+		}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 }

@@ -89,6 +89,8 @@ String id = request.getParameter("id");
   				<i class="fa fa-thumbs-down text-danger"></i> <%= idea.getDislikes() %>
   			
   				</p>
+  				 <a href="ideadeletebyadmin.jsp?id=<%= idea.getId() %>" class="btn btn-danger" onclick="return check();">
+  				 <i class="fa fa-trash"></i> Delete</a>
   				</div>
   				
   				

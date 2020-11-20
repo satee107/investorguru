@@ -80,6 +80,8 @@ String id = request.getParameter("id");
   				<div class="inline">
   				<p><i class="fa fa-envelope text-primary"></i> <%= feedback.getEmail() %></p>
   				<p><i class="fa fa-file text-success"></i> <%= feedback.getMessage() %></p>
+  				 <a href="feedbackdelete.jsp?id=<%= feedback.getId() %>" class="btn btn-danger" onclick="return check();">
+  				 <i class="fa fa-trash"></i> Delete</a>
   				
   				
   				</div>
